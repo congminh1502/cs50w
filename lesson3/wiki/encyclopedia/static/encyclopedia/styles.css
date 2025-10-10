@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    background-color: white;
+}
+
+code {
+    white-space: pre;
+}
+
+h1 {
+    margin-top: 0px;
+    padding-top: 20px;
+}
+
+textarea {
+    height: 90vh;
+    width: 80%;
+}
+
+.main {
+    padding: 10px;
+}
+
+.search {
+    width: 100%;
+    font-size: 15px;
+    line-height: 15px;
+}
+
+.sidebar {
+    background-color: #f0f0f0;
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-top: 5px;
+}
+
+
+
+/* */
+/* Base style for both buttons */
+.submit-btn,
+.submit-btn:link,
+.submit-btn:visited {
+    display: inline-block;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+/* Blue "Save" button */
+.submit-btn:not(.cancel-btn) {
+    background-color: #007bff;
+}
+
+.submit-btn:not(.cancel-btn):hover {
+    background-color: #0056b3;
+}
+
+/* Gray "Cancel" button */
+.cancel-btn {
+    background-color: #6c757d;
+    margin-left: 10px;
+}
+
+.cancel-btn:hover {
+    background-color: #5a6268;
+}
