@@ -1,0 +1,99 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ listing.title }}</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; max-width: 600px;">
+        {% if listing.image %}
+            <img src="{{ listing.image }}" alt="{{ listing.title }}" style="width:100%; max-width:400px; height:auto; display:block; margin-bottom: 10px;">
+        {% else %}
+            <em>No image available</em>
+        {% endif %}
+
+        <p><strong>Description:</strong> {{ listing.description }}</p>
+        <p><strong>Category:</strong> {{ listing.category|default:"None" }}</p>
+        <p><strong>Listed by:</strong> {{ listing.listed_by.username }}</p>
+        <p><strong>Starting price:</strong> ${{ listing.starting_bid|floatformat:2 }}</p>
+        <p><strong>Current price:</strong> ${{ listing.get_current_price|floatformat:2 }}</p>
+    </div>
+
+    {% if user.is_authenticated %}
+        {% if user in listing.watchlist.all %}
+            <form action="{% url 'watchlist' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                <button type="submit" name="remove_item"
+                        style="background: gray; color:white; font-size: 14px; padding:8px 12px; border:none; border-radius:4px;">
+                    Remove from Watchlist
+                </button>
+            </form>
+        {% else %}
+            <form action="{% url 'watchlist' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                <button type="submit" name="add_item"
+                        style="background: #007bff; color:white; font-size: 14px; padding:8px 12px; border:none; border-radius:4px;">
+                    Add to Watchlist
+                </button>
+            </form>
+        {% endif %}
+
+
+        {% if not listing.is_active %}
+            <p style="color: gray;">This auction has ended.</p>
+        {% elif user == listing.listed_by %}
+            <!-- Owner can close the auction -->
+            <form action="{% url 'listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="close_auction" style="background:#dc3545; color:white; padding:8px 12px; border:none; border-radius:4px;">
+                    Close Auction
+                </button>
+            </form>
+        {% else %}
+            <!-- Regular user can bid -->
+            <form action="{% url 'listing' listing.id %}" method="post" style="margin-top: 20px;">
+                {% csrf_token %}
+                <label for="bid">Your bid:</label>
+                <input type="number" name="bid" id="bid" min="{{ listing.get_current_price }}" step="0.01" required>
+                <button type="submit" style="padding:8px 12px;">Place Bid</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p>
+            <a href="{% url 'login' %}?next={{ request.path }}">
+                Log in
+            </a> to place a bid or manage your watchlist.
+        </p>
+    {% endif %}
+
+    <h3>Comments</h3>
+
+    {% if listing.comments.all %}
+        <ul>
+            {% for comment in listing.comments.all %}
+                <li>
+                    <strong>{{ comment.author.username }}</strong> ({{ comment.created_at|date:"M d, Y H:i" }}):  
+                    {{ comment.content }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'listing' listing.id %}" method="post" style="margin-top: 20px;">
+            {% csrf_token %}
+            <textarea name="comment_content" rows="3" placeholder="Add a comment..." required></textarea><br>
+            <button type="submit" name="add_comment">Post Comment</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to comment.</p>
+    {% endif %}
+{% endblock %}

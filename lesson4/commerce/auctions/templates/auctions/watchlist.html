@@ -1,0 +1,42 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+
+    <div class="listing-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% for item in watchlist_items %}
+            <a href="{% url 'listing' item.id %}" class="listing-link" style="text-decoration: none; color: inherit;">
+                <div class="listing" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: 0.2s;">
+                    <h3>{{ item.title }}</h3>
+                    <div>{{ item.description }}</div>
+                    <div>
+                        {% if item.image %}
+                            <img src="{{ item.image }}" alt="{{ item.title }}" style="width:200px; height:auto;">
+                        {% else %}
+                            <em>No image available</em>
+                        {% endif %}
+                    </div>
+                    <div>Starting price: ${{ item.starting_bid|floatformat:2 }}</div>
+                    <div>Current price: ${{ item.get_current_price|floatformat:2 }}</div>
+                    <div>Category: {{ item.category }}</div>
+                    <div>Listed by: {{ item.listed_by.username }}</div>
+                    <form action="{% url 'watchlist' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="listing_id" value="{{ item.id }}">
+                        <button type="submit" name="remove_item" style="background: gray; color:white; font-size: 14px; padding:8px 12px; border:none; border-radius:4px;">
+                            Remove from Watchlist
+                        </button>
+                    </form>
+                </div>
+            </a>
+        {% empty %}
+            <p>You don't have any items in your watchlist yet. Visit <a href="{% url 'index' %}">Active Listings</a> to discover.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

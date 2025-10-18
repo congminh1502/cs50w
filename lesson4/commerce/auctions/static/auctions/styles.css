@@ -1,0 +1,9 @@
+body {
+    padding: 10px;
+}
+
+.listing-link:hover .listing {
+  background-color: #f8f8f8;
+  box-shadow: 0 0 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
