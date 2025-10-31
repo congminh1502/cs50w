@@ -1,0 +1,27 @@
+textarea {
+    min-height: 400px;
+}
+
+.email-item {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.email-item:hover {
+  background-color: #e9ecef;
+}
+
+.email-item.unread {
+  background-color: white;
+}
+
+.email-item.read {
+  background-color: #f5f5f5;
+}
