@@ -1,0 +1,71 @@
+/* --- Overall Post Container (Replicating the 'card' look) --- */
+.post-item {
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 15px;
+    margin-bottom: 15px; /* Spacing between posts */
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* --- Header Section --- */
+.post-header {
+    display: flex;
+    justify-content: space-between; /* Pushes author to left, timestamp to right */
+    align-items: baseline;
+    margin-bottom: 8px;
+}
+
+.post-author {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #007bff; /* Blue link color */
+    text-decoration: none;
+}
+
+.post-timestamp {
+    color: #6c757d; /* Muted text color */
+    font-size: 0.85em;
+}
+
+/* --- Content and Divider --- */
+.post-content {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.post-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* --- Footer Section --- */
+.post-footer {
+    display: flex;
+    justify-content: space-between; /* Pushes likes to left, button to right */
+    align-items: center;
+}
+
+.post-likes {
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.post-like-btn {
+    /* Basic button styling (replicating Bootstrap btn-sm btn-outline-danger) */
+    background-color: transparent;
+    color: #dc3545; /* Red outline color */
+    border: 1px solid #dc3545;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.post-like-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
